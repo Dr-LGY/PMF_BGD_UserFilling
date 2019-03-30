@@ -33,7 +33,7 @@ public class Data
 	public static float lambda = 1.0f; // when lambda=1, uses auxiliary data
 	 
 	// learning rate $\gamma$
-	public static float gamma = 0.01f;
+	public static float gamma = 100f;
 	
 	public static float rho = 0.8f;
 
@@ -44,23 +44,24 @@ public class Data
 	public static String fnOutputData = "";
 
 	// 
-	public static int n = 71567; // number of users
-	public static int m = 10681; // number of items
+	public static int n = 943; // number of users
+	public static int m = 1682; // number of items
 	public static int num_train_target; // number of target training triples of (user,item,rating)
 	public static int num_train_auxiliary; // number of auxiliary training triples of (user,item,rating)
 	public static int num_train; // number of training triples of (user,item,rating), num_train = num_train_target+num_train_auxiliary
 	public static int num_test; // number of test triples of (user,item,rating)
 
-	public static float MinRating = 0.5f; // minimum rating value (0.5 for ML10M, Flixter; 1 for Netflix)
+	public static float MinRating = 1.0f; // minimum rating value (0.5 for ML10M, Flixter; 1 for Netflix)
 	public static float MaxRating = 5.0f; // maximum rating value
 
 	// scan number over the whole data
-	public static int num_iterations = 50; 
+	public static int num_iterations = 100; 
 
 	// === training data (target data and auxiliary dta)
 	public static int[] indexUserTrain; // start from index "0"
 	public static int[] indexItemTrain; 
 	public static float[] ratingTrain;
+	public static float[][] r;
 	public static HashMap<Integer, HashMap<Integer, HashSet<Integer>>> Train_ExplicitFeedbacksGraded 
 	= new HashMap<Integer, HashMap<Integer, HashSet<Integer>>>();
 	public static HashMap<Integer, HashSet<Integer>> Train_ExplicitFeedbacks 

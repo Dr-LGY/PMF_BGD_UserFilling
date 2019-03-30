@@ -50,6 +50,7 @@ public class ReadData
     	Data.indexUserTrain = new int[Data.num_train]; // start from index "0"
     	Data.indexItemTrain = new int[Data.num_train];
     	Data.ratingTrain = new float[Data.num_train];
+    	Data.r = new float [Data.n + 1][Data.m + 1];
         
         // --- test data
     	Data.indexUserTest = new int[Data.num_test];
@@ -76,6 +77,7 @@ public class ReadData
     		Data.indexUserTrain[id_case] = userID;
     		Data.indexItemTrain[id_case] = itemID;
     		Data.ratingTrain[id_case] = rating;
+    		Data.r[userID][itemID] = rating;
     		id_case+=1;
     		    		
     		// ---
