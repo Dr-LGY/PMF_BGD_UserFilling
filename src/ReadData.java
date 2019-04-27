@@ -17,10 +17,22 @@ public class ReadData
         Data.itemRatingNumTrain = new int[Data.m+1];
         Data.user_graded_rating_number = new int[Data.n+1][Data.num_rating_types+1];
         Data.user_rating_number = new int[Data.n+1];
-        
+        Data.ave_r_u = new float[Data.n + 1];
+        Data.I_u = new HashSet[Data.n + 1];
+        for (int u = 1; u <= Data.n; ++u) {
+        	Data.I_u[u] = new HashSet<Integer>();
+        }
+        Data.I = new HashSet<Integer>();
+        for (int i = 1; i <= Data.m; ++i)  {
+        	Data.I.add(i);
+        }
+        		
+      /*  for (int i = 1; i <= Data.m; i++) {
+        	
+        }*/
         // ----------------------------------------------------  
         // global average rating $\mu$
-        Data.g_avg = 0;  
+      //  Data.g_avg = 0;  
         
     	// --- number of target training records
         Data.num_train = 0;	
@@ -30,6 +42,7 @@ public class ReadData
     	{
     		Data.num_train += 1;
     	}
+    	
     	System.out.println("num_train_target: " + Data.num_train_target);
     	
     	    	
@@ -77,12 +90,16 @@ public class ReadData
     		Data.indexUserTrain[id_case] = userID;
     		Data.indexItemTrain[id_case] = itemID;
     		Data.ratingTrain[id_case] = rating;
+    	
+    		Data.I_u[userID].add(itemID);
+    		
     		Data.r[userID][itemID] = rating;
     		id_case+=1;
     		    		
     		// ---
     		Data.userRatingSumTrain[userID] += rating;
-    		Data.userRatingNumTrain[userID] += 1;    			
+    		Data.userRatingNumTrain[userID] += 1; 
+    		
     		Data.itemRatingSumTrain[itemID] += rating;
     		Data.itemRatingNumTrain[itemID] += 1;
     		
@@ -138,13 +155,22 @@ public class ReadData
     		Data.user_rating_number[userID] += 1;
     		gradedNum[g]++;
     	}
+    	
     	brTrain.close();
     	System.out.println("Finished reading the target training data");
+    	float sum = 0;
+    	int num = 0;
+    	for (int u = 1; u <= Data.n; u++) {
+    		Data.ave_r_u[u] = Data.userRatingSumTrain[u] / Data.userRatingNumTrain[u]; 
+			 sum += Data.userRatingSumTrain[u];
+			 num +=	Data.userRatingNumTrain[u]; 
+		}
+    	Data.ave_r = sum / num;
     	
-    	Data.g_avg = (float) (ratingSum/Data.num_train);
+    /*	Data.g_avg = (float) (ratingSum/Data.num_train);
     	System.out.println(	"average rating value: " + Float.toString(Data.g_avg));
     	// ----------------------------------------------------    	
-
+*/
     	
     	// ----------------------------------------------------
     	// --- normalization    	

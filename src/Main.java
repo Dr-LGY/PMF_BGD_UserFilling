@@ -9,6 +9,7 @@ import java.io.*;
 //movielens-1M
 //java -Xmx2048m Main -d 20 -alpha_u 0.01 -alpha_v 0.01 -alpha_w 0.01 -alpha_g 0 -beta_u 0.01 -beta_v 0.01 1 -lambda 1 -rho 0.5 -gamma 0.01 -fnTrainData ./ml-1m/copy1.target -fnTestData ./ml-1m/copy1.test -fnAuxiliaryData ./ml-1m/copy1.auxiliary -fnOutputData Result_Federated_ML1M.txt -n 6040 -m 3952 -num_iterations 50 -MinRating 1 -MaxRating 5
 
+
 //movielens-10M
 //java -Xmx2048m Main -d 20 -alpha_u 0.01 -alpha_v 0.01 -alpha_w 0.01 -alpha_g 0 -beta_u 0.01 -beta_v 0.01 1 -lambda 1 -rho 0.5 -gamma 0.01 -fnTrainData ./ml-10m/copy1.target -fnTestData ./ml-10m/copy1.test -fnAuxiliaryData ./ml-10m/copy1.auxiliary -fnOutputData Result_Federated_ML10M.txt -n 71567 -m 10681 -num_iterations 50 -MinRating 1 -MaxRating 5
 

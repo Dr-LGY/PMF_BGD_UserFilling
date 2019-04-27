@@ -10,9 +10,9 @@ public class Initialization
         Data.V1 = new float[Data.m+1][Data.d];
         Data.G = new float[Data.m+1][Data.num_rating_types+1][Data.d];
         
-    	Data.biasU = new float[Data.n+1];  // bias of user
+    /*	Data.biasU = new float[Data.n+1];  // bias of user
     	Data.biasV = new float[Data.m+1];  // bias of item
-        
+     */   
     	// ======================================================    	
     	// --- initialization of U, W, V, G
     	for (int u=1; u<Data.n+1; u++)
@@ -47,7 +47,7 @@ public class Initialization
     	
     	// ======================================================
     	// --- initialization of biasU, biasV
-    	for (int u=1; u<Data.n+1; u++)
+    /*	for (int u=1; u<Data.n+1; u++)
     	{
     		if(Data.userRatingNumTrain[u]>0)
     		{
@@ -61,7 +61,7 @@ public class Initialization
     		{
     			Data.biasV[i] = ( Data.itemRatingSumTrain[i]-Data.g_avg*Data.itemRatingNumTrain[i] ) / Data.itemRatingNumTrain[i];  
     		}
-    	}    	
+    	}   */ 	
     	// ====================================================== 
     }
 }
