@@ -12,11 +12,9 @@ public class ReadData
 	{
         // --- some statistics, start from index "1"
     	Data.userRatingSumTrain = new float[Data.n+1];
-    	Data.itemRatingSumTrain = new float[Data.m+1];
+    	//Data.itemRatingSumTrain = new float[Data.m+1];
         Data.userRatingNumTrain = new int[Data.n+1];
-        Data.itemRatingNumTrain = new int[Data.m+1];
-        Data.user_graded_rating_number = new int[Data.n+1][Data.num_rating_types+1];
-        Data.user_rating_number = new int[Data.n+1];
+  
         Data.ave_r_u = new float[Data.n + 1];
         Data.I_u = new HashSet[Data.n + 1];
         for (int u = 1; u <= Data.n; ++u) {
@@ -27,29 +25,13 @@ public class ReadData
         	Data.I.add(i);
         }
         		
-      /*  for (int i = 1; i <= Data.m; i++) {
-        	
-        }*/
-        // ----------------------------------------------------  
-        // global average rating $\mu$
-      //  Data.g_avg = 0;  
-        
-    	// --- number of target training records
-        Data.num_train = 0;	
-    	BufferedReader brTrain = new BufferedReader(new FileReader(Data.fnTrainData));    	
-    	String line = null;
-    	while ((line = brTrain.readLine())!=null)
-    	{
-    		Data.num_train += 1;
-    	}
-    	
-    	System.out.println("num_train_target: " + Data.num_train_target);
+
     	
     	    	
     	// --- number of test records
     	Data.num_test = 0;
     	BufferedReader brTest = new BufferedReader(new FileReader(Data.fnTestData));
-    	line = null;
+    	String line = null;
     	while ((line = brTest.readLine())!=null)
     	{
     		Data.num_test += 1;
@@ -60,9 +42,7 @@ public class ReadData
     	// ----------------------------------------------------
 		// --- Locate memory for the data structure    	
         // --- train data
-    	Data.indexUserTrain = new int[Data.num_train]; // start from index "0"
-    	Data.indexItemTrain = new int[Data.num_train];
-    	Data.ratingTrain = new float[Data.num_train];
+  
     	Data.r = new float [Data.n + 1][Data.m + 1];
         
         // --- test data
@@ -75,11 +55,11 @@ public class ReadData
     	// ----------------------------------------------------        
         int id_case=0;
     	double ratingSum=0;
-    	int gradedNum[] = new int[Data.num_rating_types + 1];
+    //	int gradedNum[] = new int[Data.num_rating_types + 1];
 
     	// ----------------------------------------------------
     	// Training data: (userID,itemID,rating)
-		brTrain = new BufferedReader(new FileReader(Data.fnTrainData));    	
+    	BufferedReader brTrain = new BufferedReader(new FileReader(Data.fnTrainData));    	
     	line = null;
     	while ((line = brTrain.readLine())!=null)
     	{	
@@ -87,10 +67,7 @@ public class ReadData
     		int userID = Integer.parseInt(terms[0]);
     		int itemID = Integer.parseInt(terms[1]);
     		float rating = Float.parseFloat(terms[2]);
-    		Data.indexUserTrain[id_case] = userID;
-    		Data.indexItemTrain[id_case] = itemID;
-    		Data.ratingTrain[id_case] = rating;
-    	
+
     		Data.I_u[userID].add(itemID);
     		
     		Data.r[userID][itemID] = rating;
@@ -99,61 +76,10 @@ public class ReadData
     		// ---
     		Data.userRatingSumTrain[userID] += rating;
     		Data.userRatingNumTrain[userID] += 1; 
-    		
-    		Data.itemRatingSumTrain[itemID] += rating;
-    		Data.itemRatingNumTrain[itemID] += 1;
-    		
+    
     		ratingSum+=rating;
     		
-    		// 
-    		int g = (int) (rating*2); // convert grade index to 1,2,...,10
-    		if(Data.Train_ExplicitFeedbacksGraded.containsKey(userID))
-    		{
-    			HashMap<Integer, HashSet<Integer>> g2itemSet 
-    			= Data.Train_ExplicitFeedbacksGraded.get(userID);
-    			if(g2itemSet.containsKey(g))
-    			{
-    				HashSet<Integer> itemSet = g2itemSet.get(g);
-    				itemSet.add(itemID);
-    				g2itemSet.put(g, itemSet);
-    			}
-    			else
-    			{
-    				HashSet<Integer> itemSet = new HashSet<Integer>();
-    				itemSet.add(itemID);
-    				g2itemSet.put(g, itemSet);
-    			}
-    			Data.Train_ExplicitFeedbacksGraded.put(userID, g2itemSet);
-    		}
-    		else
-    		{
-    			HashMap<Integer,HashSet<Integer>> g2itemSet 
-    			= new HashMap<Integer, HashSet<Integer>>();
-    			HashSet<Integer> itemSet = new HashSet<Integer>();
-    			itemSet.add(itemID);
-    			g2itemSet.put(g, itemSet);
-    			Data.Train_ExplicitFeedbacksGraded.put(userID, g2itemSet);
-    		}
-
-    		
-    		
-    		if(Data.Train_ExplicitFeedbacks.containsKey(userID))
-			{
-				HashSet<Integer> itemSet = Data.Train_ExplicitFeedbacks.get(userID);
-				itemSet.add(itemID);
-				Data.Train_ExplicitFeedbacks.put(userID, itemSet);
-			}
-			else
-			{
-				HashSet<Integer> itemSet = new HashSet<Integer>();
-				itemSet.add(itemID);
-				Data.Train_ExplicitFeedbacks.put(userID, itemSet);
-			}
-    		
-    		// ---
-    		Data.user_graded_rating_number[userID][g] += 1;
-    		Data.user_rating_number[userID] += 1;
-    		gradedNum[g]++;
+    
     	}
     	
     	brTrain.close();
@@ -165,12 +91,7 @@ public class ReadData
 			 sum += Data.userRatingSumTrain[u];
 			 num +=	Data.userRatingNumTrain[u]; 
 		}
-    	Data.ave_r = sum / num;
-    	
-    /*	Data.g_avg = (float) (ratingSum/Data.num_train);
-    	System.out.println(	"average rating value: " + Float.toString(Data.g_avg));
-    	// ----------------------------------------------------    	
-*/
+    
     	
     	// ----------------------------------------------------
     	// --- normalization    	

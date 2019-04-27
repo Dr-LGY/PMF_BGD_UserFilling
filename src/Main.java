@@ -27,39 +27,12 @@ public class Main
 		// 3. apply initialization
 		Initialization.initialization();
 		
-		// 4. train the auxiliary
-	//	Auxiliary.train(Data.num_iterations);
-	
-		//adaptive
-//		for (int i=1; i<Data.m+1; i++)
-//    	{
-//    		for (int f=0; f<Data.d; f++)
-//    		{
-//    			Data.V[i][f] = Data.V1[i][f];
-//    		}
-//    	}
-		
-		// 5. train the target
-		Train_target.train(Data.num_iterations);
-		
-		//adaptive
-//		for (int i=1; i<Data.m+1; i++)
-//    	{
-//    		for (int f=0; f<Data.d; f++)
-//    		{
-//    			Data.V[i][f] += Data.V1[i][f];
-//    		}
-//    	}
-		
-		//Train_target.train(Data.num_iterations);
+		// 4. train
 
-//		// 6. exchange V and V1	collaborative		
-//		Auxiliary.train1(Data.num_iterations / 2);
-//		
-//		Train_target.train1(Data.num_iterations / 2);
-        
+		Train.train(Data.num_iterations);
+		
+
 		// 5. test
 		Test.test();		
-//    	Divide.readData();
     }
 }
