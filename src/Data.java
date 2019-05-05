@@ -18,7 +18,7 @@ public class Data
 	
 
 	// learning rate $\gamma$
-	public static float gamma = 1000f;
+	public static float gamma = 0.1f;
 	
 	public static float rho = 0;
 
@@ -37,7 +37,7 @@ public class Data
 	public static float MaxRating = 5.0f; // maximum rating value
 
 	// scan number over the whole data
-	public static int num_iterations = 1000; 
+	public static int num_iterations = 2000; 
 
 	// === training data (target data and auxiliary dta)
 	public static float[][] r;

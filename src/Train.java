@@ -21,7 +21,8 @@ public class Train {
 			}
 			float grad_V[][] = new float[Data.m + 1][Data.d];
 			float grad_U[][] = new float[Data.n + 1][Data.d];
-			double one_div_NM =  1.0 / (Data.n * Data.m);
+		//	double one_div_NM =  1.0 / (Data.n * Data.m);
+		
 			for (int u = 1; u <= Data.n; u++) {
 				List<Integer> I_A = new LinkedList<Integer>(Data.I);
 				I_A.removeAll(Data.I_u[u]);
@@ -78,12 +79,13 @@ public class Train {
 			
 				
 			}
+			//change
 			for (int u = 1; u <= Data.n; ++u) {
-				for(int f=0; f<Data.d; f++) Data.U[u][f] = (float) (Data.U[u][f] - Data.gamma * grad_U[u][f] * one_div_NM);
+				for(int f=0; f<Data.d; f++) Data.U[u][f] = (float) (Data.U[u][f] - Data.gamma * grad_U[u][f] / (Data.I_u[u].size() * (1 + Data.rho)));
 				
 			}
 			for (int i = 1; i <= Data.m; ++i) {
-				for(int f=0; f<Data.d; f++) Data.V[i][f] = (float) (Data.V[i][f] - Data.gamma * grad_V[i][f] * one_div_NM);
+				for(int f=0; f<Data.d; f++) Data.V[i][f] = (float) (Data.V[i][f] - Data.gamma * grad_V[i][f] / Data.n);
 			}
 		
 			Data.gamma = (float) (Data.gamma * ((float)(200 * iterations) / (iter + 200 * iterations)) );
